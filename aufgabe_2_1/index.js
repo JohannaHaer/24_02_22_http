@@ -2,7 +2,9 @@ import http from 'http'
 import fs from 'fs'
 
 const sendFile = (path, res) => {
-    fs.readFile(`./${path}`, (err, data) => {
+    // const filePath = `./public${path}`
+    // console.log(filePath);
+    fs.readFile(`./public${path}`, (err, data) => {
         if(err) {
             res.writeHead(500)
             res.end("Server Error")
@@ -12,17 +14,13 @@ const sendFile = (path, res) => {
     })
 }
 
-const server = http.createServer((res, req) => {
+const server = http.createServer((req, res) => {
     if(req.url === "/") {
-        sendFile("index.html", res)
-    } else if ( req.url === "/about") {
-        sendFile("about.html", res)
-    } else if ( req.url === "/contact") {
-        sendFile("contact.html", res)
-    } else if ( req.url === "/faq") {
-        sendFile("faq.html", res)
+        sendFile("/index.html", res)
     } else {
+        // console.log(req.url);
         sendFile(req.url, res)
+
     }
 })
 
